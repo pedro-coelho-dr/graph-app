@@ -39,3 +39,58 @@ https://docs.google.com/document/d/1A2LGiRKgcpwn5rRIiV5VUTZO9E9PO5sRnIlRa6df6ik/
   </td>
 </table>
 <br>
+
+<table>
+  <thead >
+    <tr>
+      <th style="width: 200px">Atividade</th>
+      <th style="width: 200px">Caio</th>
+      <th style="width: 200px">Diogo</th>
+      <th style="width: 200px">Pedro</th>
+      <th style="width: 200px">Virna</th>
+      <th >TOTAL</th>
+    </tr>
+  </thead>
+  <tbody align="center">
+    <tr>
+      <td>Especificação</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>Codificação</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>Testes</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>Documentação</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td><strong>TOTAL</strong></td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td style="background-color:#f4a460;"><strong>0</strong></td>
+    </tr>
+  </tbody>
+</table>
