@@ -1,8 +1,9 @@
 # graphVizProject-RelaxArestas
 Repositário destinado ao trabalho da cadeira Teoria dos Grafos, que consiste na criação de um software de visualização e construção de grafos.
 
-## Equipe
+https://docs.google.com/document/d/1A2LGiRKgcpwn5rRIiV5VUTZO9E9PO5sRnIlRa6df6ik/edit
 
+## Equipe
 <table>
   <td align="center">
     <a href="https://github.com/Kal-0">
