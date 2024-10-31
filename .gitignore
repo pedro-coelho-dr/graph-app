@@ -1,0 +1,34 @@
+# Ambiente Virtual
+venv/
+.VSCode/
+
+# Arquivos de configuração e logs do Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pdb
+
+# Configurações de IDE
+.vscode/
+.idea/
+
+# Arquivos temporários e de cache do sistema
+*.DS_Store
+*.log
+*.swp
+*.swo
+*.swn
+
+# Arquivos de cache de Streamlit
+.streamlit/
+
+# Configurações de ambiente e credenciais (opcional)
+.env
+.env.*
+
+# Arquivos específicos de Jupyter (caso use notebooks para análises)
+.ipynb_checkpoints
+
+# Arquivos gerados por dependências (opcional, mas recomendado)
+*.egg-info/
