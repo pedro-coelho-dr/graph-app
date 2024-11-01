@@ -1,13 +1,15 @@
 import streamlit as st
-from pages import test_page as tp
-# Dicionário de páginas com as referências
+from app_pages import home, test_page
+
+# Dicionário com as páginas que devem aparecer no menu
 pages = {
-    "Página 1": tp,
+    "Home": home,
+    "Página de Teste": test_page,
 }
 
 # Menu lateral
 st.sidebar.title("Menu")
-page = st.sidebar.selectbox("Selecione a página", options=list(pages.keys()))
+page = st.sidebar.radio("Navegação", list(pages.keys()))
 
 # Carregar a página selecionada
 selected_page = pages[page]
