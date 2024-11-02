@@ -14,6 +14,9 @@ def app():
     # Controle do grafo direcionado
     directed = st.sidebar.checkbox("Grafo Direcional", value=isinstance(st.session_state.graph, nx.DiGraph))
 
+    # Grafo valorado
+    valued = st.sidebar.checkbox("Grafo Valorado", value=False)
+
     # Se o tipo de grafo foi alterado, reinicializa o grafo
     if directed and not isinstance(st.session_state.graph, nx.DiGraph):
         st.session_state.graph = nx.DiGraph()
@@ -45,7 +48,12 @@ def app():
     if len(st.session_state.graph.nodes) >= 2:  # Verifica se há pelo menos dois nós para selecionar
         node1 = st.sidebar.selectbox("Vértice 1", options=st.session_state.graph.nodes)
         node2 = st.sidebar.selectbox("Vértice 2", options=st.session_state.graph.nodes)
-        weight = st.sidebar.number_input("Peso da Aresta", value=1.0, step=1.0)
+
+        # Definindo o peso da aresta baseado no valor do grafo
+        if valued:  # Verifica se o grafo é valorado
+            weight = st.sidebar.number_input("Peso da Aresta", value=1.0, step=1.0)
+        else:
+            weight = 0.0  # Define um peso padrão se não for valorado
 
         if st.sidebar.button("Adicionar Aresta"):
             if node1 != node2 and not st.session_state.graph.has_edge(node1, node2):
@@ -63,7 +71,7 @@ def app():
     # Exibe o grafo usando a visualização original do NetworkX e matplotlib
     fig, ax = plt.subplots(figsize=(8, 6))
     pos = nx.spring_layout(st.session_state.graph)
-    
+
     # Desenha nós e arestas
     nx.draw_networkx_nodes(st.session_state.graph, pos, ax=ax, node_color='skyblue', node_size=500)
     if directed:
@@ -71,10 +79,11 @@ def app():
     else:
         nx.draw_networkx_edges(st.session_state.graph, pos, ax=ax, edge_color='#888')
     nx.draw_networkx_labels(st.session_state.graph, pos, ax=ax, font_size=12, font_color='darkblue')
-    
+
     # Exibe pesos das arestas no meio delas
-    edge_labels = nx.get_edge_attributes(st.session_state.graph, 'weight')
-    nx.draw_networkx_edge_labels(st.session_state.graph, pos, edge_labels=edge_labels, ax=ax, font_color='red')
+    if valued:
+        edge_labels = nx.get_edge_attributes(st.session_state.graph, 'weight')
+        nx.draw_networkx_edge_labels(st.session_state.graph, pos, edge_labels=edge_labels, ax=ax, font_color='red')
 
     st.pyplot(fig)
 
