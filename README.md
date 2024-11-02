@@ -1,7 +1,140 @@
-# graphVizProject-RelaxArestas
-Repositário destinado ao trabalho da cadeira Teoria dos Grafos, que consiste na criação de um software de visualização e construção de grafos.
+# Simulador de Grafos
 
-https://docs.google.com/document/d/1A2LGiRKgcpwn5rRIiV5VUTZO9E9PO5sRnIlRa6df6ik/edit
+Este projeto utiliza `Streamlit` para a interface e `NetworkX` para manipulação e visualização de grafos. O objetivo é criar um sistema para armazenar e manipular um Grafo Simples em memória, permitindo ao usuário criar grafos e explorar suas propriedades de maneira interativa.
+
+O sistema possibilita a criação de grafos:
+- Direcionados ou não-direcionados
+- Valorados ou não-valorados
+- Conexos ou não-conexos
+  
+E possibilita a visualização das propriedades e características do grafo, como:
+
+- Ordem e Tamanho
+- Lista de vértices adjacentes
+- Grau dos vértices
+- Verificação de adjacência entre vértices
+- Cálculo do caminho mais curto entre dois vértices
+
+Este projeto foi desenvolvido como parte da da disciplina `Teoria dos Grafos` da `Ciência da Computação` na `Cesar School`.
+
+## Funcionalidades
+
+### Menu de Criação
+Este menu permite criar e configurar grafos adicionando vértices e arestas individualmente ou em lote. As opções incluem:
+
+1. Adicionar Vértice
+   - Permite inserir um vértice ao grafo, especificando um valor único para o vértice.
+2. Adicionar Aresta
+   - Permite inserir uma aresta entre dois vértices, especificando:
+     - Vértice 1: Ponto inicial ou um dos vértices da aresta.
+     - Vértice 2: Ponto final ou o outro vértice da aresta.
+     - Direção: Define se a aresta é direcionada ou não.
+     - Peso: Opcionalmente, define o peso da aresta.
+3. Adicionar Vértices e Arestas em Lote
+   - Permite inserir informações de vértices e arestas em lote, por meio de um string com definição completa do grafo.
+
+```mermaid
+graph TD
+
+    B[Menu de Criação]
+   
+    B --> B1[Adicionar Vértice]
+    B --> B2[Adicionar Aresta]
+    B --> B3[Adicionar em Lote]
+    B1 --> B1A[Rótulo]
+    B2 --> B2A[Vértice 1]
+    B2 --> B2B[Vértice 2]
+    B2 --> B2C[Direção]
+    B2 --> B2D[Peso]
+```
+
+
+### Menu de Informações
+1. Ordem e Tamnho do Grafo
+   - Exibe a Ordem (número de vértices) e o Tamanho (número de arestas) do grafo.
+2. Selecionar Um Vértice
+   - Permite ao usuário selecionar um vértice específico para obter mais informações:
+     - Vértices Adjacentes: Lista de vértices adjacentes ao vértice selecionado. Se o grafo for direcionado, mostra a lista de adjacentes de entrada e de saída.
+     - Grau do Vértice: Exibe o grau do vértice. Em grafos direcionados, mostra o grau de entrada e de saída.
+3. Selecionar Dois Vértices
+     - Permite ao usuário selecionar dois vértices para verificar informações sobre sua relação:
+        - Verificar Adjacência: Indica se os dois vértices selecionados são adjacentes.
+        - Caminho Mais Curto: Calcula e exibe o menor caminho entre os dois vértices, incluindo:
+          - Custo: Custo total do menor caminho.
+          - Sequência de Vértices: Caminho percorrido do primeiro vértice até o segundo.
+  
+
+```mermaid
+graph TD
+    C[Menu de Informações]
+    C --> C2[Selecionar Um Vértice]
+    C --> C1[Ordem e Tamanho do Grafo]
+    C --> C3[Selecionar Dois Vértices]
+
+    C2 --> C2A[Vértices Adjacentes]
+    C2 --> C2B[Grau do Vértice]
+    C2B --> C2B1[Grau de Entrada]
+    C2B --> C2B2[Grau de Saída]
+
+    C3 --> C3A[Verificar Adjacência]
+    C3 --> C3B[Caminho Mais Curto]
+    C3B --> C3B1[Custo]
+    C3B --> C3B2[Sequência de Vértices]
+```
+
+## Como executar
+
+### Pré-requisitos
+- **Python**
+- **Streamlit** e outras bibliotecas listadas em `requirements.txt`.
+
+### Instruções
+
+- Clone o repositório:
+   ```bash
+   git clone https://github.com/virnaamaral/graphVizProject-RelaxArestas.git
+   ```
+- Crie e ative o ambiente virtual:   
+  
+    Linux:
+   ```bash
+   python3 -m venv venv
+   ```
+   ```bash
+   source venv/bin/activate
+   ```
+    Windows:
+   ```bash
+   python -m venv venv
+   ```
+   ```bash
+   .\venv\Scripts\activate
+   ```
+   caso ExecutionPolicy esteja restrito:
+   ```bash
+   Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
+   ```
+
+- Instale as dependências:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+ - Rode o app:
+   ```bash
+   streamlit run main.py
+   ```
+
+## Tabela de Atividades
+
+| Atividade       | Caio | Diogo | Pedro | Virna | TOTAL |
+|-----------------|------|-------|-------|-------|-------|
+| Especificação   | 0    | 0     | 1     | 1     | 2     |
+| Codificação     | 4    | 2     | 0     | 0     | 6     |
+| Testes          | 0    | 0     | 0     | 0     | 0     |
+| Documentação    | 0    | 0     | 1     | 1     | 2     |
+| **TOTAL**       | 4    | 2     | 2     | 2     | **10** |
+
 
 ## Equipe
 <table>
@@ -39,58 +172,3 @@ https://docs.google.com/document/d/1A2LGiRKgcpwn5rRIiV5VUTZO9E9PO5sRnIlRa6df6ik/
   </td>
 </table>
 <br>
-
-<table>
-  <thead >
-    <tr>
-      <th style="width: 200px">Atividade</th>
-      <th style="width: 200px">Caio</th>
-      <th style="width: 200px">Diogo</th>
-      <th style="width: 200px">Pedro</th>
-      <th style="width: 200px">Virna</th>
-      <th >TOTAL</th>
-    </tr>
-  </thead>
-  <tbody align="center">
-    <tr>
-      <td>Especificação</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <td>Codificação</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <td>Testes</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <td>Documentação</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <td><strong>TOTAL</strong></td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td style="background-color:#f4a460;"><strong>0</strong></td>
-    </tr>
-  </tbody>
-</table>
