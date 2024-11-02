@@ -7,8 +7,20 @@ from utils.graph_info import get_graph_info
 def app():
     st.title("Simulador de Grafos Interativo")
 
+    # Armazena o estado do grafo no session_state
     if "graph" not in st.session_state:
-        st.session_state.graph = nx.DiGraph()  # DiGraph para suportar arestas direcionadas
+        st.session_state.graph = nx.Graph()  # Inicializa como grafo não-direcionado por padrão
+
+    # Controle do grafo direcionado
+    directed = st.sidebar.checkbox("Grafo Direcional", value=isinstance(st.session_state.graph, nx.DiGraph))
+
+    # Se o tipo de grafo foi alterado, reinicializa o grafo
+    if directed and not isinstance(st.session_state.graph, nx.DiGraph):
+        st.session_state.graph = nx.DiGraph()
+        st.success("Grafo redefinido para direcionado.")
+    elif not directed and isinstance(st.session_state.graph, nx.DiGraph):
+        st.session_state.graph = nx.Graph()
+        st.success("Grafo redefinido para não direcionado.")
 
     # ============MENU-START=================
 
@@ -30,18 +42,17 @@ def app():
 
     # Opções para adicionar arestas manualmente
     st.sidebar.header("Adicionar Arestas Manualmente")
-    node1 = st.sidebar.selectbox("Vértice 1", options=st.session_state.graph.nodes)
-    node2 = st.sidebar.selectbox("Vértice 2", options=st.session_state.graph.nodes)
-    weight = st.sidebar.number_input("Peso da Aresta", value=1.0, step=1.0)
-    directed = st.sidebar.checkbox("Aresta Direcionada")
+    if len(st.session_state.graph.nodes) >= 2:  # Verifica se há pelo menos dois nós para selecionar
+        node1 = st.sidebar.selectbox("Vértice 1", options=st.session_state.graph.nodes)
+        node2 = st.sidebar.selectbox("Vértice 2", options=st.session_state.graph.nodes)
+        weight = st.sidebar.number_input("Peso da Aresta", value=1.0, step=1.0)
 
-    if st.sidebar.button("Adicionar Aresta"):
-        if node1 != node2 and not st.session_state.graph.has_edge(node1, node2):
-            if directed:
+        if st.sidebar.button("Adicionar Aresta"):
+            if node1 != node2 and not st.session_state.graph.has_edge(node1, node2):
                 st.session_state.graph.add_edge(node1, node2, weight=weight)
-            else:
-                st.session_state.graph.add_edge(node1, node2, weight=weight)
-            st.success(f"Aresta entre '{node1}' e '{node2}' com peso {weight} adicionada!")
+                st.success(f"Aresta entre '{node1}' e '{node2}' com peso {weight} adicionada!")
+    else:
+        st.sidebar.write("Adicione pelo menos dois vértices para criar arestas.")
 
     # ===========MENU-END============
 
@@ -53,9 +64,12 @@ def app():
     fig, ax = plt.subplots(figsize=(8, 6))
     pos = nx.spring_layout(st.session_state.graph)
     
-    # Desenha nós e arestas com pesos e setas direcionadas
+    # Desenha nós e arestas
     nx.draw_networkx_nodes(st.session_state.graph, pos, ax=ax, node_color='skyblue', node_size=500)
-    nx.draw_networkx_edges(st.session_state.graph, pos, ax=ax, arrows=True, arrowstyle='->', edge_color='#888')
+    if directed:
+        nx.draw_networkx_edges(st.session_state.graph, pos, ax=ax, arrows=True, arrowstyle='->', edge_color='#888', arrowsize=15)
+    else:
+        nx.draw_networkx_edges(st.session_state.graph, pos, ax=ax, edge_color='#888')
     nx.draw_networkx_labels(st.session_state.graph, pos, ax=ax, font_size=12, font_color='darkblue')
     
     # Exibe pesos das arestas no meio delas
