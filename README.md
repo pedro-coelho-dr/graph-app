@@ -124,11 +124,11 @@ graph TD
 
 | Atividade       | Caio | Diogo | Pedro | Virna | TOTAL |
 |-----------------|------|-------|-------|-------|-------|
-| Especificação   | 0    | 0     | 0     | 0     | 0     |
-| Codificação     | 0    | 0     | 0     | 0     | 0     |
+| Especificação   | 0    | 0     | 1     | 1     | 2     |
+| Codificação     | 4    | 2     | 0     | 0     | 6     |
 | Testes          | 0    | 0     | 0     | 0     | 0     |
-| Documentação    | 0    | 0     | 0     | 0     | 0     |
-| **TOTAL**       | 0    | 0     | 0     | 0     | **0** |
+| Documentação    | 0    | 0     | 1     | 1     | 2     |
+| **TOTAL**       | 4    | 2     | 2     | 2     | **10** |
 
 
 ## Equipe
