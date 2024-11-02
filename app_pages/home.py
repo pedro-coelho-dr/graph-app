@@ -1,6 +1,6 @@
 import streamlit as st
 import networkx as nx
-import plotly.graph_objects as go
+import matplotlib.pyplot as plt
 from utils.graph_parser import parse_graph_input
 from utils.graph_info import get_graph_info
 
@@ -44,93 +44,25 @@ def app():
             st.success(f"Aresta entre '{node1}' e '{node2}' com peso {weight} adicionada!")
 
     # ===========MENU-END============
-    
 
-    #ORDEM E TAMANHO
+    # Exibe ordem e tamanho do grafo
     ordem, tamanho = get_graph_info(st.session_state.graph)
     st.write(f"**Ordem: {ordem} // Tamanho:** {tamanho}")
 
-    # Define a posição inicial dos vértices
+    # Exibe o grafo usando a visualização original do NetworkX e matplotlib
+    fig, ax = plt.subplots(figsize=(8, 6))
     pos = nx.spring_layout(st.session_state.graph)
+    
+    # Desenha nós e arestas com pesos e setas direcionadas
+    nx.draw_networkx_nodes(st.session_state.graph, pos, ax=ax, node_color='skyblue', node_size=500)
+    nx.draw_networkx_edges(st.session_state.graph, pos, ax=ax, arrows=True, arrowstyle='->', edge_color='#888')
+    nx.draw_networkx_labels(st.session_state.graph, pos, ax=ax, font_size=12, font_color='darkblue')
+    
+    # Exibe pesos das arestas no meio delas
+    edge_labels = nx.get_edge_attributes(st.session_state.graph, 'weight')
+    nx.draw_networkx_edge_labels(st.session_state.graph, pos, edge_labels=edge_labels, ax=ax, font_color='red')
 
-    # Coleta coordenadas para arestas
-    edge_x = []
-    edge_y = []
-    edge_weight_text = []  # Para armazenar o texto do peso
-
-    for edge in st.session_state.graph.edges(data=True):
-        x0, y0 = pos[edge[0]]
-        x1, y1 = pos[edge[1]]
-        edge_x += [x0, x1, None]
-        edge_y += [y0, y1, None]
-
-        # Posição média para exibir o peso no meio da aresta
-        mid_x = (x0 + x1) / 2
-        mid_y = (y0 + y1) / 2
-        edge_weight_text.append((mid_x, mid_y, edge[2].get("weight", 1)))  # Padrão: peso 1
-
-    # Configura o traçado das arestas no Plotly
-    edge_trace = go.Scatter(
-        x=edge_x, y=edge_y,
-        line=dict(width=2, color='#888'),
-        hoverinfo='none',
-        mode='lines'
-    )
-
-    # Coleta coordenadas para nós
-    node_x = []
-    node_y = []
-    for node in st.session_state.graph.nodes():
-        x, y = pos[node]
-        node_x.append(x)
-        node_y.append(y)
-
-    # Configura o traçado dos nós no Plotly
-    node_trace = go.Scatter(
-        x=node_x, y=node_y,
-        mode='markers+text',
-        text=list(st.session_state.graph.nodes),
-        textposition="bottom center",
-        marker=dict(
-            color='skyblue',
-            size=20,
-        ),
-        textfont=dict(
-            color='darkblue',
-            size=14,
-        ),
-        hoverinfo="text"
-    )
-
-    # Configura o traçado dos pesos das arestas no Plotly
-    weight_trace = go.Scatter(
-        x=[pos[0] for pos in edge_weight_text],
-        y=[pos[1] for pos in edge_weight_text],
-        text=[f"{pos[2]}" for pos in edge_weight_text],
-        mode="text",
-        textposition="middle center",
-        textfont=dict(
-            color="red",
-            size=12
-        ),
-        hoverinfo="none"
-    )
-
-    # Exibe o grafo interativo no Streamlit usando Plotly
-    fig = go.Figure(data=[edge_trace, node_trace, weight_trace],
-                    layout=go.Layout(
-                        title="Grafo Interativo",
-                        titlefont_size=16,
-                        showlegend=False,
-                        hovermode='closest',
-                        margin=dict(b=0, l=0, r=0, t=40),
-                        paper_bgcolor='white',
-                        plot_bgcolor='white',
-                        xaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
-                        yaxis=dict(showgrid=False, zeroline=False, showticklabels=False))
-    )
-
-    st.plotly_chart(fig, use_container_width=True)
+    st.pyplot(fig)
 
 # Executa o app
 if __name__ == "__main__":
