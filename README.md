@@ -33,10 +33,26 @@ Este menu permite criar e configurar grafos adicionando vértices e arestas indi
 3. Adicionar Vértices e Arestas em Lote
    - Permite inserir informações de vértices e arestas em lote, por meio de um string com definição completa do grafo.
 
+```mermaid
+graph TD
+
+    B[Menu de Criação]
+   
+    B --> B1[Adicionar Vértice]
+    B --> B2[Adicionar Aresta]
+    B --> B3[Adicionar em Lote]
+    B1 --> B1A[Rótulo]
+    B2 --> B2A[Vértice 1]
+    B2 --> B2B[Vértice 2]
+    B2 --> B2C[Direção]
+    B2 --> B2D[Peso]
+```
+
+
 ### Menu de Informações
 1. Ordem e Tamnho do Grafo
    - Exibe a Ordem (número de vértices) e o Tamanho (número de arestas) do grafo.
-2. Selecionar Vértice
+2. Selecionar Um Vértice
    - Permite ao usuário selecionar um vértice específico para obter mais informações:
      - Vértices Adjacentes: Lista de vértices adjacentes ao vértice selecionado. Se o grafo for direcionado, mostra a lista de adjacentes de entrada e de saída.
      - Grau do Vértice: Exibe o grau do vértice. Em grafos direcionados, mostra o grau de entrada e de saída.
@@ -47,24 +63,13 @@ Este menu permite criar e configurar grafos adicionando vértices e arestas indi
           - Custo: Custo total do menor caminho.
           - Sequência de Vértices: Caminho percorrido do primeiro vértice até o segundo.
   
+
 ```mermaid
 graph TD
-    A[Simulador de Grafos]
-    A --> B[Menu de Criação]
-    A --> C[Menu de Informações]
-
-    B --> B1[Adicionar Vértice]
-    B --> B2[Adicionar Aresta]
-    B --> B3[Adicionar em Lote]
-
+    C[Menu de Informações]
+    C --> C2[Selecionar Um Vértice]
     C --> C1[Ordem e Tamanho do Grafo]
-    C --> C2[Selecionar Vértice]
     C --> C3[Selecionar Dois Vértices]
-
-    B2 --> B2A[Vértice 1]
-    B2 --> B2B[Vértice 2]
-    B2 --> B2C[Direção]
-    B2 --> B2D[Peso]
 
     C2 --> C2A[Vértices Adjacentes]
     C2 --> C2B[Grau do Vértice]
