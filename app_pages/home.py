@@ -2,6 +2,7 @@ import streamlit as st
 import networkx as nx
 import plotly.graph_objects as go
 from utils.graph_parser import parse_graph_input
+from utils.graph_info import get_graph_info
 
 def app():
     st.title("Simulador de Grafos Interativo")
@@ -43,6 +44,11 @@ def app():
             st.success(f"Aresta entre '{node1}' e '{node2}' com peso {weight} adicionada!")
 
     # ===========MENU-END============
+    
+
+    #ORDEM E TAMANHO
+    ordem, tamanho = get_graph_info(st.session_state.graph)
+    st.write(f"**Ordem: {ordem} // Tamanho:** {tamanho}")
 
     # Define a posição inicial dos vértices
     pos = nx.spring_layout(st.session_state.graph)
