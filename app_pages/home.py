@@ -32,6 +32,8 @@ def app():
     graph_input = st.sidebar.text_area("Insira as arestas no formato especificado:")
     if st.sidebar.button("Criar Grafo por Texto"):
         st.session_state.graph.clear()  # Limpa o grafo existente antes de adicionar novos nós/arestas
+
+        # gerar grafo
         parse_graph_input(graph_input, st.session_state.graph)
         st.success("Grafo criado com sucesso a partir do texto!")
 
@@ -40,6 +42,8 @@ def app():
     new_node = st.sidebar.text_input("Nome do Vértice")
     if st.sidebar.button("Adicionar Vértice"):
         if new_node and new_node not in st.session_state.graph:
+            
+            # adicionar vertice
             st.session_state.graph.add_node(new_node)
             st.success(f"Vértice '{new_node}' adicionado!")
 
@@ -57,6 +61,8 @@ def app():
 
         if st.sidebar.button("Adicionar Aresta"):
             if node1 != node2 and not st.session_state.graph.has_edge(node1, node2):
+
+                # adicionar aresta
                 st.session_state.graph.add_edge(node1, node2, weight=weight)
                 st.success(f"Aresta entre '{node1}' e '{node2}' com peso {weight} adicionada!")
     else:
@@ -68,22 +74,31 @@ def app():
     ordem, tamanho = get_graph_info(st.session_state.graph)
     st.write(f"**Ordem: {ordem} // Tamanho:** {tamanho}")
 
+
+
+
     # Exibe o grafo usando a visualização original do NetworkX e matplotlib
     fig, ax = plt.subplots(figsize=(8, 6))
+
+    
     pos = nx.spring_layout(st.session_state.graph)
 
-    # Desenha nós e arestas
     nx.draw_networkx_nodes(st.session_state.graph, pos, ax=ax, node_color='skyblue', node_size=500)
+
+    # Desenha arestas
     if directed:
         nx.draw_networkx_edges(st.session_state.graph, pos, ax=ax, arrows=True, arrowstyle='->', edge_color='#888', arrowsize=15)
     else:
         nx.draw_networkx_edges(st.session_state.graph, pos, ax=ax, edge_color='#888')
+    
+    # Desenha legendas
     nx.draw_networkx_labels(st.session_state.graph, pos, ax=ax, font_size=12, font_color='darkblue')
 
     # Exibe pesos das arestas no meio delas
     if valued:
         edge_labels = nx.get_edge_attributes(st.session_state.graph, 'weight')
         nx.draw_networkx_edge_labels(st.session_state.graph, pos, edge_labels=edge_labels, ax=ax, font_color='red')
+
 
     st.pyplot(fig)
 
