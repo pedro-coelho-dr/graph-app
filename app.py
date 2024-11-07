@@ -165,8 +165,15 @@ with col1:
             adjacents = list(st.session_state.graph.neighbors(selected_node))
             st.write(f"**Grau:** {degree}")
             st.write(f"**Vértices Adjacentes:** {', '.join(map(str, adjacents))}")
+
+            if isinstance(st.session_state.graph, nx.DiGraph):
+                in_degree = st.session_state.graph.in_degree[selected_node]
+                out_degree = st.session_state.graph.out_degree[selected_node]
+                st.write(f"**Grau de Entrada:** {in_degree}")
+                st.write(f"**Grau de Saída:** {out_degree}")
     else:
         st.write("Adicione vértices ao grafo.")
+
 
 # Coluna 2: Selecionar dois vértices
 with col2:
