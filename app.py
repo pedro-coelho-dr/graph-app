@@ -174,23 +174,22 @@ with col1:
     else:
         st.write("Adicione vértices ao grafo.")
 
-
-# Coluna 2: Selecionar dois vértices
+# Coluna 2: Selecionar um segundo vértice para comparação com o vértice selecionado na Coluna 1
 with col2:
-    st.subheader("Selecionar Dois Vértices")
+    st.subheader("Comparar Outro Vértice")
     if len(st.session_state.graph.nodes) > 1:
-        node1 = st.selectbox("Vértice 1", options=st.session_state.graph.nodes, key="node1")
-        node2 = st.selectbox("Vértice 2", options=st.session_state.graph.nodes, key="node2")
-        if node1 and node2:
-            # Verifica adjacência
-            adjacent = st.session_state.graph.has_edge(node1, node2)
+        node2 = st.selectbox("Escolha Outro Vértice", options=[node for node in st.session_state.graph.nodes], key="node2")
+        
+        if selected_node and node2:
+            # Verifica adjacência entre os vértices selecionados
+            adjacent = st.session_state.graph.has_edge(selected_node, node2)
             st.write(f"**Adjacentes:** {'Sim' if adjacent else 'Não'}")
             
             # Calcula o caminho mais curto se os vértices não forem iguais
-            if node1 != node2:
+            if selected_node != node2:
                 try:
-                    shortest_path = nx.shortest_path(st.session_state.graph, source=node1, target=node2, weight='weight' if valued else None)
-                    path_length = nx.shortest_path_length(st.session_state.graph, source=node1, target=node2, weight='weight' if valued else None)
+                    shortest_path = nx.shortest_path(st.session_state.graph, source=selected_node, target=node2, weight='weight' if valued else None)
+                    path_length = nx.shortest_path_length(st.session_state.graph, source=selected_node, target=node2, weight='weight' if valued else None)
                     st.write(f"**Caminho Mais Curto:** {' → '.join(shortest_path)}")
                     st.write(f"**Custo do Caminho:** {path_length}")
                 except nx.NetworkXNoPath:
