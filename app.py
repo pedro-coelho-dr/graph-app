@@ -171,6 +171,30 @@ with col1:
                 out_degree = st.session_state.graph.out_degree[selected_node]
                 st.write(f"**Grau de Entrada:** {in_degree}")
                 st.write(f"**Grau de Saída:** {out_degree}")
+            
+            # Centralidade de Grau
+            degree_centrality = nx.degree_centrality(st.session_state.graph)[selected_node]
+            st.write(f"**Centralidade de Grau:** {degree_centrality:.2f}")
+
+            # Centralidade de Proximidade
+            closeness_centrality = nx.closeness_centrality(st.session_state.graph, selected_node)
+            st.write(f"**Centralidade de Proximidade:** {closeness_centrality:.2f}")
+
+            # Centralidade de Intermediação (Betweenness)
+            betweenness_centrality = nx.betweenness_centrality(st.session_state.graph)[selected_node]
+            st.write(f"**Centralidade de Intermediação:** {betweenness_centrality:.2f}")
+
+            # Coeficiente de Agrupamento (Clustering Coefficient)
+            clustering_coefficient = nx.clustering(st.session_state.graph, selected_node)
+            st.write(f"**Coeficiente de Agrupamento:** {clustering_coefficient:.2f}")
+
+            # Excentricidade (caso o grafo seja conexo)
+            try:
+                eccentricity = nx.eccentricity(st.session_state.graph, selected_node)
+                st.write(f"**Excentricidade:** {eccentricity}")
+            except nx.NetworkXError:
+                st.write("**Excentricidade:** Não aplicável (grafo desconexo)")
+
     else:
         st.write("Adicione vértices ao grafo.")
 
