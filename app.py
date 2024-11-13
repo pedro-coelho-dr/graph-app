@@ -205,7 +205,7 @@ with col2:
         node2 = st.selectbox("Escolha Outro Vértice", options=[node for node in st.session_state.graph.nodes], key="node2")
         
         if selected_node and node2:
-            # Verifica adjacência entre os vértices selecionados
+            # Verifica adjacência  entre os vértices selecionados
             adjacent = st.session_state.graph.has_edge(selected_node, node2)
             st.write(f"**Adjacentes:** {'Sim' if adjacent else 'Não'}")
             
