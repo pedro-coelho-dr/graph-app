@@ -178,25 +178,55 @@ with col1:
             adjacents = list(st.session_state.graph.neighbors(selected_node))
             st.write(f"**Grau:** {degree}")
             st.write(f"**Vértices Adjacentes:** {', '.join(map(str, adjacents))}")
+
+            if isinstance(st.session_state.graph, nx.DiGraph):
+                in_degree = st.session_state.graph.in_degree[selected_node]
+                out_degree = st.session_state.graph.out_degree[selected_node]
+                st.write(f"**Grau de Entrada:** {in_degree}")
+                st.write(f"**Grau de Saída:** {out_degree}")
+            
+            # Centralidade de Grau
+            degree_centrality = nx.degree_centrality(st.session_state.graph)[selected_node]
+            st.write(f"**Centralidade de Grau:** {degree_centrality:.2f}")
+
+            # Centralidade de Proximidade
+            closeness_centrality = nx.closeness_centrality(st.session_state.graph, selected_node)
+            st.write(f"**Centralidade de Proximidade:** {closeness_centrality:.2f}")
+
+            # Centralidade de Intermediação (Betweenness)
+            betweenness_centrality = nx.betweenness_centrality(st.session_state.graph)[selected_node]
+            st.write(f"**Centralidade de Intermediação:** {betweenness_centrality:.2f}")
+
+            # Coeficiente de Agrupamento (Clustering Coefficient)
+            clustering_coefficient = nx.clustering(st.session_state.graph, selected_node)
+            st.write(f"**Coeficiente de Agrupamento:** {clustering_coefficient:.2f}")
+
+            # Excentricidade (caso o grafo seja conexo)
+            try:
+                eccentricity = nx.eccentricity(st.session_state.graph, selected_node)
+                st.write(f"**Excentricidade:** {eccentricity}")
+            except nx.NetworkXError:
+                st.write("**Excentricidade:** Não aplicável (grafo desconexo)")
+
     else:
         st.write("Adicione vértices ao grafo.")
 
-# Coluna 2: Selecionar dois vértices
+# Coluna 2: Selecionar um segundo vértice para comparação com o vértice selecionado na Coluna 1
 with col2:
-    st.subheader("Selecionar Dois Vértices")
+    st.subheader("Comparar Outro Vértice")
     if len(st.session_state.graph.nodes) > 1:
-        node1 = st.selectbox("Vértice 1", options=st.session_state.graph.nodes, key="node1")
-        node2 = st.selectbox("Vértice 2", options=st.session_state.graph.nodes, key="node2")
-        if node1 and node2:
-            # Verifica adjacência
-            adjacent = st.session_state.graph.has_edge(node1, node2)
+        node2 = st.selectbox("Escolha Outro Vértice", options=[node for node in st.session_state.graph.nodes], key="node2")
+        
+        if selected_node and node2:
+            # Verifica adjacência  entre os vértices selecionados
+            adjacent = st.session_state.graph.has_edge(selected_node, node2)
             st.write(f"**Adjacentes:** {'Sim' if adjacent else 'Não'}")
             
             # Calcula o caminho mais curto se os vértices não forem iguais
-            if node1 != node2:
+            if selected_node != node2:
                 try:
-                    shortest_path = nx.shortest_path(st.session_state.graph, source=node1, target=node2, weight='weight' if valued else None)
-                    path_length = nx.shortest_path_length(st.session_state.graph, source=node1, target=node2, weight='weight' if valued else None)
+                    shortest_path = nx.shortest_path(st.session_state.graph, source=selected_node, target=node2, weight='weight' if valued else None)
+                    path_length = nx.shortest_path_length(st.session_state.graph, source=selected_node, target=node2, weight='weight' if valued else None)
                     st.write(f"**Caminho Mais Curto:** {' → '.join(shortest_path)}")
                     st.write(f"**Custo do Caminho:** {path_length}")
                 except nx.NetworkXNoPath:
