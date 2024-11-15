@@ -160,18 +160,30 @@ with col1:
     if len(st.session_state.graph.nodes) > 0:
         selected_node = st.selectbox("Escolha um Vértice", options=st.session_state.graph.nodes)
         if selected_node:
-            # Exibe informações sobre o vértice selecionado
-            degree = st.session_state.graph.degree[selected_node]
-            adjacents = list(st.session_state.graph.neighbors(selected_node))
-            st.write(f"**Grau:** {degree}")
-            st.write(f"**Vértices Adjacentes:** {', '.join(map(str, adjacents))}")
+            st.write(f"**Vértice Selecionado:** {selected_node}")
 
-            if isinstance(st.session_state.graph, nx.DiGraph):
+            # Adjacências (vizinhos)
+            neighbors = list(st.session_state.graph.neighbors(selected_node))
+            st.write(f"**Vizinhos:** {', '.join(map(str, neighbors)) if neighbors else 'Nenhum'}")
+
+            # Verificar se o grafo é direcionado
+            if isinstance(st.session_state.graph, nx.DiGraph):  # Grafo direcionado
+                # Graus de entrada e saída
                 in_degree = st.session_state.graph.in_degree[selected_node]
                 out_degree = st.session_state.graph.out_degree[selected_node]
                 st.write(f"**Grau de Entrada:** {in_degree}")
                 st.write(f"**Grau de Saída:** {out_degree}")
-            
+
+                # Vértices adjacentes de entrada e saída
+                in_neighbors = [node for node in st.session_state.graph.predecessors(selected_node)]
+                out_neighbors = [node for node in st.session_state.graph.successors(selected_node)]
+                st.write(f"**Vértices Adjacentes de Entrada:** {', '.join(map(str, in_neighbors)) if in_neighbors else 'Nenhum'}")
+                st.write(f"**Vértices Adjacentes de Saída:** {', '.join(map(str, out_neighbors)) if out_neighbors else 'Nenhum'}")
+            else:  # Grafo não direcionado  
+                # Grau total
+                degree = st.session_state.graph.degree[selected_node]
+                st.write(f"**Grau:** {degree}")
+
             # Centralidade de Grau
             degree_centrality = nx.degree_centrality(st.session_state.graph)[selected_node]
             st.write(f"**Centralidade de Grau:** {degree_centrality:.2f}")
@@ -197,6 +209,7 @@ with col1:
 
     else:
         st.write("Adicione vértices ao grafo.")
+
 
 # Coluna 2: Selecionar um segundo vértice para comparação com o vértice selecionado na Coluna 1
 with col2:
