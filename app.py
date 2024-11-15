@@ -3,6 +3,7 @@ import networkx as nx
 import matplotlib.pyplot as plt
 from graph.parser import parse_graph_input
 from graph.info import get_graph_info
+import io
 
 ### CONFIGURAÇÕES ###
 st.set_page_config(
@@ -11,7 +12,6 @@ st.set_page_config(
     layout="centered",
     initial_sidebar_state="expanded"
 )
-
 
 ### ESTADO ###
 
@@ -86,7 +86,7 @@ if len(st.session_state.graph.edges) > 0:
 ### SALVAR ###
 
 # Seção SALVAR
-st.sidebar.header("SALVAR")
+st.sidebar.header("GERAR INSTRUÇÃO DO GRAFO")
 
 # Gera a string a partir do grafo atual
 if len(st.session_state.graph.edges) > 0:
@@ -100,10 +100,11 @@ else:
     grafo_string = ""
 
 # Atualiza o campo de texto ao salvar
-if st.sidebar.button("Salvar Grafo"):
+if st.sidebar.button("Gerar Instrução"):
     st.session_state.graph_text = grafo_string
 
 # Exibe e permite a entrada do grafo no campo de texto
+st.sidebar.header("INSERÇÃO EM LOTE")
 graph_input = st.sidebar.text_area("Formato: A-(1)-B", value=st.session_state.graph_text, height=150)
 
 # Botão para gerar um novo grafo a partir do input de texto
@@ -118,7 +119,7 @@ st.sidebar.markdown("---")
 if st.sidebar.button("Limpar Grafo"):
     st.session_state.graph = nx.Graph()
     st.session_state.graph_text = ""
-    #st.experimental_rerun()  # Refreshes the app to reset the UI
+    # st.experimental_rerun()  # Refreshes the app to reset the UI
 
 ############## MAIN ##############
 
@@ -129,7 +130,6 @@ st.write(f"[Ordem: {ordem} ] [Tamanho: {tamanho}]")
 
 # Exibe o grafo usando a visualização original do NetworkX e matplotlib
 fig, ax = plt.subplots(figsize=(8, 6))
-
 
 pos = nx.spring_layout(st.session_state.graph)
 
@@ -151,6 +151,19 @@ if valued:
 
 
 st.pyplot(fig)
+
+# Salva o gráfico em um buffer de memória
+buffer = io.BytesIO()
+plt.savefig(buffer, format="png")
+buffer.seek(0)
+
+# Botão de download para o gráfico gerado
+st.download_button(
+    label="Baixar Grafo",
+    data=buffer,
+    file_name="grafo.png",
+    mime="image/png"
+)
 
 col1, col2 = st.columns(2)
 
