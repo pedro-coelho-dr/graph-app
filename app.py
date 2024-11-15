@@ -61,8 +61,9 @@ if len(st.session_state.graph.nodes) > 0:
 
 # Adicionar aresta
 st.sidebar.header("ARESTAS")
-st.sidebar.subheader("Adicionar Aresta")
+
 if len(st.session_state.graph.nodes) >= 2:
+    st.sidebar.subheader("Adicionar Aresta")
     node1 = st.sidebar.selectbox("Vértice 1", options=st.session_state.graph.nodes)
     node2 = st.sidebar.selectbox("Vértice 2", options=st.session_state.graph.nodes)
 
@@ -103,6 +104,8 @@ else:
 if st.sidebar.button("Gerar Instrução"):
     st.session_state.graph_text = grafo_string
 
+
+# =================LOTE==================
 # Exibe e permite a entrada do grafo no campo de texto
 st.sidebar.header("INSERÇÃO EM LOTE")
 graph_input = st.sidebar.text_area("Formato: A-(1)-B", value=st.session_state.graph_text, height=150)
@@ -110,7 +113,10 @@ graph_input = st.sidebar.text_area("Formato: A-(1)-B", value=st.session_state.gr
 # Botão para gerar um novo grafo a partir do input de texto
 if st.sidebar.button("Gerar Grafo"):
     st.session_state.graph.clear()
-    parse_graph_input(graph_input, st.session_state.graph)
+    st.session_state.graph = parse_graph_input(graph_input, st.session_state.graph)
+    st.rerun()
+    
+
 
 ### LIMPAR ###
 

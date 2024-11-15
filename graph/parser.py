@@ -1,6 +1,5 @@
 import re
 
-
 def parse_graph_input(graph_input, graph):
     pattern = r'(\w+)\s*(<|>|-)\s*(?:\((\d*\.?\d+)\))?\s*(>|-)?\s*(\w+)'
     
@@ -18,6 +17,8 @@ def parse_graph_input(graph_input, graph):
         if connector1 == '-' and connector2 == '-':
             graph.add_edge(node1, node2, weight=weight)
         elif connector1 == '>' or connector2 == '>':
-            graph.add_edge(node1, node2, weight=weight, directed=True)
+            graph.add_edge(node1, node2, weight=weight)
         elif connector1 == '<' or connector2 == '<':
-            graph.add_edge(node2, node1, weight=weight, directed=True)
+            graph.add_edge(node2, node1, weight=weight)
+
+    return graph
