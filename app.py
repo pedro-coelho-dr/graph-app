@@ -171,6 +171,8 @@ st.download_button(
     mime="image/png"
 )
 
+st.header("Informações do Grafo")
+
 col1, col2 = st.columns(2)
 
 # Coluna 1: Selecionar um vértice

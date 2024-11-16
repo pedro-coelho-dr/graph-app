@@ -127,13 +127,13 @@ graph TD
 
 ## Tabela de Atividades
 
-| Atividade       | Caio | Diogo | Pedro | Virna | TOTAL |
-|-----------------|------|-------|-------|-------|-------|
-| Especificação   | 0    | 0     | 1     | 1     | 2     |
-| Codificação     | 4    | 3     | 1     | 0     | 8    |
-| Testes          | 0    | 0     | 1     | 0     | 1     |
-| Documentação    | 0    | 0     | 1     | 1     | 2     |
-| **TOTAL**       | 4    | 3     | 4     | 2     | **11** |
+| Atividade       | Caio | Diogo | Pedro | Virna | TOTAL  |
+|-----------------|------|-------|-------|-------|--------|
+| Especificação   | 0    | 0     | 1     | 1     | 2      |
+| Codificação     | 6    | 3     | 1     | 1     | 11     |
+| Testes          | 1    | 1     | 1     | 2     | 5      |
+| Documentação    | 0    | 2     | 1     | 2     | 5      |
+| **TOTAL**       | 7    | 6     | 4     | 6     | **23** |
 
 
 ## Equipe
