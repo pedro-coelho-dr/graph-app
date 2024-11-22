@@ -1,6 +1,7 @@
 import streamlit as st
 import networkx as nx
 import matplotlib.pyplot as plt
+import pandas as pd
 from graph.parser import parse_graph_input
 from graph.info import get_graph_info
 import io
@@ -105,18 +106,37 @@ if st.sidebar.button("Gerar Instrução"):
     st.session_state.graph_text = grafo_string
 
 
-# =================LOTE==================
+########## LOTE #############
+
 # Exibe e permite a entrada do grafo no campo de texto
 st.sidebar.header("INSERÇÃO EM LOTE")
 graph_input = st.sidebar.text_area("Formato: A-(1)-B", value=st.session_state.graph_text, height=150)
 
-# Botão para gerar um novo grafo a partir do input de texto
+# Upload de arquivo CSV
+uploaded_file = st.sidebar.file_uploader("Carregue um arquivo CSV (opcional)", type=["csv"])
+
+# Processar o arquivo CSV, se fornecido
+if uploaded_file:
+    # Carregar o CSV
+    df = pd.read_csv(uploaded_file)
+
+    # Construir as arestas no formato de texto
+    if "Weigth" in df.columns:  # Para grafos valorados
+        edges_from_csv = [f"{row['Source']}-({row['Weigth']})-{row['Target']}" for _, row in df.iterrows()]
+    else:  # Para grafos não valorados
+        edges_from_csv = [f"{row['Source']}--{row['Target']}" for _, row in df.iterrows()]
+
+    # Gerar o grafo automaticamente
+    st.session_state.graph.clear()
+    st.session_state.graph_text = "\n".join(edges_from_csv)
+    st.session_state.graph = parse_graph_input(st.session_state.graph_text, st.session_state.graph)
+    st.sidebar.success("Grafo gerado automaticamente a partir do arquivo!")
+
+# Botão para gerar um novo grafo a partir do input manual
 if st.sidebar.button("Gerar Grafo"):
     st.session_state.graph.clear()
     st.session_state.graph = parse_graph_input(graph_input, st.session_state.graph)
-    st.rerun()
-    
-
+    st.session_state.graph_text = graph_input  # Atualiza o texto no campo
 
 ### LIMPAR ###
 
@@ -129,10 +149,20 @@ if st.sidebar.button("Limpar Grafo"):
 
 ############## MAIN ##############
 
-# Exibe ordem e tamanho do grafo
-ordem, tamanho = get_graph_info(st.session_state.graph)
-st.write(f"[Ordem: {ordem} ] [Tamanho: {tamanho}]")
+########### INFORMAÇÕES GERAIS GRAFO ##########
 
+# Pega informações
+ordem, tamanho = get_graph_info(st.session_state.graph)
+
+if st.session_state.graph.number_of_nodes() == 0:
+    euleriano = "Grafo vazio"
+else:
+    euleriano = "Sim" if nx.is_eulerian(st.session_state.graph) else "Não"
+
+ordem, tamanho = get_graph_info(st.session_state.graph)
+st.write(f"[**Ordem**: {ordem} ] [**Tamanho**: {tamanho}] [**Euleriano:** {euleriano}]")
+
+##############################################
 
 # Exibe o grafo usando a visualização original do NetworkX e matplotlib
 fig, ax = plt.subplots(figsize=(8, 6))
