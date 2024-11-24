@@ -49,6 +49,7 @@ new_node = st.sidebar.text_input("Nome do Vértice")
 if st.sidebar.button("Adicionar Vértice"):
     if new_node and new_node not in st.session_state.graph:
         st.session_state.graph.add_node(new_node)
+        
 
 # Remover vértice - exibe apenas se houver vértices
 if len(st.session_state.graph.nodes) > 0:
@@ -104,6 +105,7 @@ else:
 # Atualiza o campo de texto ao salvar
 if st.sidebar.button("Gerar Instrução"):
     st.session_state.graph_text = grafo_string
+    st.rerun()
 
 
 ########## LOTE #############
@@ -130,6 +132,7 @@ if uploaded_file:
     st.session_state.graph.clear()
     st.session_state.graph_text = "\n".join(edges_from_csv)
     st.session_state.graph = parse_graph_input(st.session_state.graph_text, st.session_state.graph)
+    st.rerun()
     st.sidebar.success("Grafo gerado automaticamente a partir do arquivo!")
 
 # Botão para gerar um novo grafo a partir do input manual
@@ -137,6 +140,7 @@ if st.sidebar.button("Gerar Grafo"):
     st.session_state.graph.clear()
     st.session_state.graph = parse_graph_input(graph_input, st.session_state.graph)
     st.session_state.graph_text = graph_input  # Atualiza o texto no campo
+    st.rerun()
 
 ### LIMPAR ###
 
@@ -145,6 +149,7 @@ st.sidebar.markdown("---")
 if st.sidebar.button("Limpar Grafo"):
     st.session_state.graph = nx.Graph()
     st.session_state.graph_text = ""
+    st.rerun()
     # st.experimental_rerun()  # Refreshes the app to reset the UI
 
 ############## MAIN ##############
