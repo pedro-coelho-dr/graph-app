@@ -132,7 +132,6 @@ if uploaded_file:
     st.session_state.graph.clear()
     st.session_state.graph_text = "\n".join(edges_from_csv)
     st.session_state.graph = parse_graph_input(st.session_state.graph_text, st.session_state.graph)
-    st.rerun()
     st.sidebar.success("Grafo gerado automaticamente a partir do arquivo!")
 
 # Botão para gerar um novo grafo a partir do input manual
