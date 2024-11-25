@@ -5,6 +5,7 @@ import pandas as pd
 from graph.parser import parse_graph_input
 from graph.info import get_graph_info
 import io
+from graph.info import calculate_layout
 
 ### CONFIGURAÇÕES ###
 st.set_page_config(
@@ -132,7 +133,6 @@ if uploaded_file:
     st.session_state.graph.clear()
     st.session_state.graph_text = "\n".join(edges_from_csv)
     st.session_state.graph = parse_graph_input(st.session_state.graph_text, st.session_state.graph)
-    st.rerun()
     st.sidebar.success("Grafo gerado automaticamente a partir do arquivo!")
 
 # Botão para gerar um novo grafo a partir do input manual
@@ -172,7 +172,7 @@ st.write(f"[**Ordem**: {ordem} ] [**Tamanho**: {tamanho}] [**Euleriano:** {euler
 # Exibe o grafo usando a visualização original do NetworkX e matplotlib
 fig, ax = plt.subplots(figsize=(8, 6))
 
-pos = nx.spring_layout(st.session_state.graph)
+pos = calculate_layout(st.session_state.graph)
 
 nx.draw_networkx_nodes(st.session_state.graph, pos, ax=ax, node_color='skyblue', node_size=500)
 
