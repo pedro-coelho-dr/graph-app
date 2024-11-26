@@ -1,0 +1,11 @@
+CJ-(5)-AR
+CJ-(10)-QT
+CJ-(6)-PR
+AR-(13)-BJ
+BJ-(11)-PR
+BJ-(6)-QT
+PR-(3)-QT
+QT-(4)-CC
+CC-(6)-PR
+CC-(8)-ES
+BJ-(3)-ES
