@@ -132,8 +132,8 @@ graph TD
 | Especificação   | 1    | 1     | 1     | 1     | 4      |
 | Codificação     | 6    | 3     | 3     | 1     | 13     |
 | Testes          | 1    | 2     | 1     | 3     | 7      |
-| Documentação    | 0    | 2     | 1     | 2     | 5      |
-| **TOTAL**       | 8    | 8     | 6     | 7     | **29** |
+| Documentação    | 0    | 2     | 1     | 4     | 7      |
+| **TOTAL**       | 8    | 8     | 6     | 9     | **31** |
 
 
 ## Equipe
