@@ -125,17 +125,6 @@ graph TD
    streamlit run app.py
    ```
 
-## Tabela de Atividades
-
-| Atividade       | Caio | Diogo | Pedro | Virna | TOTAL  |
-|-----------------|------|-------|-------|-------|--------|
-| Especificação   | 1    | 1     | 1     | 1     | 4      |
-| Codificação     | 6    | 3     | 3     | 1     | 13     |
-| Testes          | 1    | 2     | 1     | 3     | 7      |
-| Documentação    | 0    | 2     | 1     | 4     | 7      |
-| **TOTAL**       | 8    | 8     | 6     | 9     | **31** |
-
-
 ## Equipe
 <table>
   <td align="center">
